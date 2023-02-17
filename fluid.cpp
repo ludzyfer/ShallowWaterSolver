@@ -7,7 +7,7 @@ double S[NX + 1] = { 0 }; //wysokosc cieczy
 double B[NX + 1] = { 0 }; //wysokosc podloza
 double H[NX + 1] = { 0 }; //H=S-B (glebokosc cieczy)
 double X[NX + 1] = { 0 }; //tablica pozycji od d³ugoœci DX
-double DT = 0.03;
+double DT = 0.04;
 
 double g = 9.8;
 
@@ -33,7 +33,7 @@ void InitSurface(void)
 	{
 		//S[i] = 0.45 - (cos((double)i / 25) / 15);
 		S[i] = 0.3;
-		S[i] += 0.2 * exp(-(pow((X[i] - X[NX / 3]) / 12, 2)));
+		S[i] += 0.2 * exp(-(pow((X[i] - X[NX / 3]) / 6, 2)));
 		if (S[i] < B[i])
 			S[i] = B[i];
 	}
@@ -72,7 +72,7 @@ void CalculateSurface(void)
 
 	S[0] = S[1];
 	S[NX] = S[NX-1];
-	//}
+	
 	
 
 }
