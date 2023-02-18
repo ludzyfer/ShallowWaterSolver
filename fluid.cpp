@@ -6,7 +6,8 @@ double U[NX + 1] = { 0 }; //predkosc pozioma slupa cieczy
 double S[NX + 1] = { 0 }; //wysokosc cieczy
 double B[NX + 1] = { 0 }; //wysokosc podloza
 double H[NX + 1] = { 0 }; //H=S-B (glebokosc cieczy)
-double X[NX + 1] = { 0 }; //tablica pozycji od d³ugoœci DX
+double X[NX + 1] = { 0 }; //tablica pozycji o d³ugoœci DX
+//double Y[NY + 1] = { 0 }; //tablica pozycji o d³ugoœci DY
 double DT = 0.04;
 
 double g = 9.8;
@@ -17,19 +18,26 @@ void InitSurface(void)
 	for (int i = 1; i < NX; i++)
 		X[i] = X[i - 1] + DX;
 
+	//for (int i = 1; i < NY; i++)
+	//	Y[i] = Y[i - 1] + DY;
+
 //	 define bottom
 
 	for (int i = 0; i < NX; i++)
-	{
-		//B[i] = sin((double)i / 22) / 12;
-		//if (B[i] < 0) B[i] = 0;
-		//B[i] = 0.05+sin((double)i / 10) / 6;
-		B[i] = 0.2;
-	}
+		//for (int j = 0; i < NY; j++)
+		{
+			//B[i] = sin((double)i / 22) / 12;
+			//if (B[i] < 0) B[i] = 0;
+			//B[i] = 0.05+sin((double)i / 10) / 6;
+			//B[i,j] = 0.2;
+			B[i] = 0.2;
+		}
+
 
 	// define surface + added rain drop
 
 	for (int i = 0; i < NX; i++)
+
 	{
 		//S[i] = 0.45 - (cos((double)i / 25) / 15);
 		S[i] = 0.3;
@@ -55,7 +63,7 @@ void CalculateSurface(void)
 		H[i] = S[i] - B[i];
 	}
 
-	//calculate U
+	//calculate UX
 	for (int i = 1; i < NX; i++)
 	{
 		u = H[i] * (S[i - 1] - 2 * S[i] + S[i + 1]);
@@ -65,6 +73,18 @@ void CalculateSurface(void)
 		u *= g;
 		U[i] = U[i] + u * DT;
 	}
+
+	////calculate UY
+	//for (int i = 1; i < NX; i++)
+	//	for (int j = 1; j < NY; j++)
+	//{
+	//	u = H[i] * (S[i - 1] - 2 * S[i] + S[i + 1]);
+	//	u += H[i - 1] * (S[i - 1] - S[i]);
+	//	u += H[i + 1] * (S[i + 1] - S[i]);
+	//	u /= (2.0f * DX);
+	//	u *= g;
+	//	U[i] = U[i] + u * DT;
+	//}
 
 	//calculate S
 	for (int i = 1; i < NX; i++)
