@@ -7,9 +7,27 @@ double S[NX + 1] = { 0 }; //wysokosc cieczy
 double B[NX + 1] = { 0 }; //wysokosc podloza
 double H[NX + 1] = { 0 }; //H=S-B (glebokosc cieczy)
 double X[NX + 1] = { 0 }; //tablica pozycji od d³ugoœci DX
-double DT = 0.03;
+double DT = 0.1;
 
 double g = 9.8;
+
+void FillMatrixA(gsl_matrix* A, double* H, double* S, double* B)
+{
+	gsl_vector_view H = gsl_vector_view_array(H, 3);
+	for (size_t i = 0; i < NX; i++)
+	{
+		
+		gsl_matrix_set(A, i, i, 4);
+		gsl_matrix_set(A, i, i + 1, 1);
+		gsl_matrix_set(A, i + 1, i, 1);
+	}
+
+	gsl_matrix_set(A, N - 1, N - 1, 4);
+
+	gsl_matrix_set(A, 0, 1, 2);
+
+	gsl_matrix_set(A, N - 1, N - 2, 2);
+}
 
 void InitSurface(void)
 {
@@ -33,11 +51,10 @@ void InitSurface(void)
 	{
 		//S[i] = 0.45 - (cos((double)i / 25) / 15);
 		S[i] = 0.3;
-		S[i] += 0.2 * exp(-(pow((X[i] - X[NX / 3]) / 12, 2)));
+		S[i] += 0.2 * exp(-(pow((X[i] - X[NX / 3]) / 6, 2)));
 		if (S[i] < B[i])
 			S[i] = B[i];
 	}
-
 }
 
 void CalculateSurface(void)
@@ -45,7 +62,6 @@ void CalculateSurface(void)
 	double u;
 	//	double as;
 	//std::cout << "calc\n";
-	//{
 		
 	//calculate H
 	for (int i = 0; i < NX; i++)
@@ -55,25 +71,30 @@ void CalculateSurface(void)
 		H[i] = S[i] - B[i];
 	}
 
-	//calculate U
-	for (int i = 1; i < NX; i++)
-	{
-		u = H[i] * (S[i - 1] - 2 * S[i] + S[i + 1]);
-		u += H[i - 1] * (S[i - 1] - S[i]);
-		u += H[i + 1] * (S[i + 1] - S[i]);
-		u /= (2.0f * DX);
-		u *= g;
-		U[i] = U[i] + u * DT;
-	}
+	////calculate U
+	//for (int i = 1; i < NX; i++)
+	//{
+	//	u = H[i] * (S[i - 1] - 2 * S[i] + S[i + 1]);
+	//	u += H[i - 1] * (S[i - 1] - S[i]);
+	//	u += H[i + 1] * (S[i + 1] - S[i]);
+	//	u /= (2.0f * DX2);
+	//	u *= g;
+	//	U[i] = U[i] + u * DT;
+	//}
 
-	//calculate S
-	for (int i = 1; i < NX; i++)
-		S[i] = S[i] + U[i] * DT;
+	////calculate S
+	//for (int i = 1; i < NX; i++)
+	//	S[i] = S[i] + U[i] * DT;
 
 	S[0] = S[1];
 	S[NX] = S[NX-1];
-	//}
 	
+	//calculation with Euler
+
+	for (int i = 2; i < NX; i++)
+	{
+
+	}
 
 }
 

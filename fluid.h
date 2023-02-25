@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <GL/glut.h>
+#include <C:\src\vcpkg\packages\gsl_x64-windows\include\gsl\gsl_linalg.h>
 
 // properties of physic world
 
