@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <GL/glut.h>
-#include <C:\src\vcpkg\packages\gsl_x64-windows\include\gsl\gsl_linalg.h>
+#include <GSL/gsl_linalg.h>
 
 // properties of physic world
 
@@ -20,3 +20,5 @@ void InitSurface(void);
 void CalculateSurface(void);
 
 void DrawFluidSurface(void);
+
+//void FillMatrixA(gsl_matrix*, double*, double*, double*);

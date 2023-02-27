@@ -4,7 +4,6 @@ void Init(void)
 {
     glClearColor(1, 1, 1, 0);
     InitSurface();
-    //std::cout << "init"<<std::endl;
 }
 
 void Idle(void)
