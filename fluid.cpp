@@ -66,9 +66,9 @@ void InitSurface(void)
 
 	for (int i = 0; i < NX; i++)
 	{
-		//S[i] = 0.45 - (cos((double)i / 25) / 15);
-		S[i] = 0.3;
-		S[i] += 0.2 * exp(-(pow((X[i] - X[NX / 3]) / 6, 2)));
+		S[i] = 0.45 - (cos((double)i / 25) / 15);
+		//S[i] = 0.3;
+		//S[i] += 0.2 * exp(-(pow((X[i] - X[NX / 3]) / 10, 2)));
 		if (S[i] < B[i])
 			S[i] = B[i];
 	}
